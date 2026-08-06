@@ -10,6 +10,15 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **CI workflow: concurrency cancellation + job timeout** (PR #24). Run
+  history showed CI runs stacking ~1-2 min apart during Dependabot bursts
+  and rapid pushes, with superseded runs completing anyway instead of
+  being cancelled — wasted runner minutes. Added a `concurrency` group
+  keyed on workflow+ref with `cancel-in-progress: true`, and
+  `timeout-minutes: 10` on the `build` job (was relying on the 6h
+  default). Individual steps were already fast (~40-45s full run); no
+  need to split into parallel jobs at this size — the extra
+  checkout/setup-node overhead per job would outweigh the gain.
 - **Closed Dependabot PR #23 (eslint 9.39.5 → 10.8.0), added an ignore
   rule for it.** Same pattern as PR #20 below: `npm run lint` in CI threw
   `TypeError: Error while loading rule 'react/display-name':
