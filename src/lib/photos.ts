@@ -59,3 +59,10 @@ export const photos: Photo[] = [
 export function getPhotoBySlug(slug: string): Photo | undefined {
   return photos.find((photo) => photo.slug === slug);
 }
+
+export function formatPrice(priceCents: number): string {
+  return (priceCents / 100).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+}
