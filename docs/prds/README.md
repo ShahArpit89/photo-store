@@ -12,6 +12,10 @@ Product requirement docs for photo-store, one file per feature.
    issue template) that link back to the PRD file, and add each to the
    [project board](../../../projects) as Ready.
 4. Update the PRD's `Status` field as it moves through its lifecycle.
+5. When an implementation PR merges, its board item needs to move to Done
+   explicitly — GitHub auto-closes the linked issue, but the board doesn't
+   follow. Run `/sync-board` to reconcile (safe to run anytime; it only
+   updates items that are actually done and not yet marked so).
 
 ## Numbering
 

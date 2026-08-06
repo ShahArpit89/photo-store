@@ -10,6 +10,15 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **`/sync-board` command added** (`.claude/commands/sync-board.md`):
+  discovered issue #2's board item was stuck at "In Review" even though
+  PR #5 had merged — `/implement-issue` moves items to In Review when it
+  opens a PR, but nothing moves them to Done afterward, since the merge
+  usually happens later, outside that command's run. `/sync-board`
+  reconciles the board against actual issue/PR state (closed issue or
+  merged PR → Done) and is now called out in `CLAUDE.md` as something to
+  run early in any session, plus noted in `docs/prds/README.md`'s
+  workflow and at the bottom of `/implement-issue`.
 - **Reverted the Claude Code Action (`claude-review.yml`, `claude.yml`).**
   Set up automated PR review via `anthropics/claude-code-action`, tried
   `CLAUDE_CODE_OAUTH_TOKEN` (blocked by an org-settings permission wall),

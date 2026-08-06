@@ -61,3 +61,9 @@ Run all of these and fix any failures before continuing:
 Tell the user the PR URL and a one-line summary of what was implemented. Do
 not merge the PR yourself — per project convention, code changes go through
 review before merging (docs/prds/README.md).
+
+Note: this command's own board update stops at "In Review" — it doesn't
+mark the item Done, since that only happens after a merge that may occur
+later, outside this run. Run `/sync-board` after the user reports a merge
+(or proactively, at the start of a session working on this project) to
+close that loop.
