@@ -12,7 +12,8 @@ export const photos: Photo[] = [
   {
     slug: "mountain-sunrise",
     title: "Mountain Sunrise",
-    description: "First light breaking over a ridgeline, shot from a high alpine trail.",
+    description:
+      "First light breaking over a ridgeline, shot from a high alpine trail.",
     priceCents: 4500,
     imageUrl: "/photos/mountain-sunrise.jpg",
     width: 1600,
@@ -21,7 +22,8 @@ export const photos: Photo[] = [
   {
     slug: "coastal-fog",
     title: "Coastal Fog",
-    description: "A quiet shoreline wrapped in morning fog, waves barely visible.",
+    description:
+      "A quiet shoreline wrapped in morning fog, waves barely visible.",
     priceCents: 4000,
     imageUrl: "/photos/coastal-fog.jpg",
     width: 1600,
@@ -48,7 +50,8 @@ export const photos: Photo[] = [
   {
     slug: "city-lights",
     title: "City Lights",
-    description: "A long-exposure skyline shot after dusk, streets glowing below.",
+    description:
+      "A long-exposure skyline shot after dusk, streets glowing below.",
     priceCents: 5500,
     imageUrl: "/photos/city-lights.jpg",
     width: 1600,
