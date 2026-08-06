@@ -40,5 +40,5 @@ even commit.
 ## Project history
 
 [`docs/HISTORY.md`](docs/HISTORY.md) is a running log of notable decisions
-— read it for context on *why* things are the way they are, not just *what*
+— read it for context on _why_ things are the way they are, not just _what_
 changed (that's what `git log` is for).
