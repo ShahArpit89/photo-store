@@ -10,6 +10,18 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Closed Dependabot PR #20 (typescript 5.9.3 → 7.0.2), added an ignore
+  rule for it.** CI's `build` check failed on `npm ci` with `EUSAGE:
+Missing: typescript@5.9.3 from lock file`. Root cause: TypeScript 7 is
+  incompatible with `@typescript-eslint/utils` (vendored inside
+  `eslint-config-next`), which peer-depends on `typescript@">=4.8.4
+<6.1.0"` — confirmed by reproducing locally with npm 10 (what CI's
+  Node 22 setup actually bundles; npm 11 only warns instead of failing,
+  which is why `npm ci` looked fine on a newer local npm). Not a
+  lockfile-sync mistake, a real incompatibility. Added a
+  `dependabot.yml` ignore rule for `typescript` major-version bumps so
+  this doesn't recur every week — remove it once `eslint-config-next`/
+  `typescript-eslint` support TS 7.
 - **Overnight "make it professional" pass**, done autonomously per request
   while the user slept, entirely as PRs — nothing merged without review.
   Six PRs:
