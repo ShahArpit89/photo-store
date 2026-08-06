@@ -49,6 +49,4 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_ACTIONS }}
           webhook-type: incoming-webhook
           payload: |
-            {
-              "text": "${{ needs.build.result == 'success' && ':white_check_mark:' || ':x:' }} CI *${{ needs.build.result }}* on `${{ github.ref_name }}` — ${{ github.event.head_commit.message || github.event.pull_request.title }}\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            }
+            {"text": ${{ toJson(format('{0} CI *{1}* on `{2}` — {3}{4}{5}/{6}/actions/runs/{7}', needs.build.result == 'success' && ':white_check_mark:' || ':x:', needs.build.result, github.ref_name, github.event.head_commit.message || github.event.pull_request.title, '\n', github.server_url, github.repository, github.run_id)) }}}
