@@ -58,4 +58,3 @@ otherwise have to re-derive.
   which doesn't exist until typegen/build has run once.
 - **Convention agreed**: code changes always go through branch + PR + CI;
   low-risk docs/config edits can be pushed directly to `main`.
-
