@@ -5,6 +5,12 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    ignore:
+      # TypeScript 7 breaks @typescript-eslint/utils (vendored by
+      # eslint-config-next), which peer-depends on typescript <6.1.0.
+      # Revisit once eslint-config-next/typescript-eslint support TS 7.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"

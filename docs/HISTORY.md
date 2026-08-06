@@ -10,6 +10,51 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Closed Dependabot PR #20 (typescript 5.9.3 → 7.0.2), added an ignore
+  rule for it.** CI's `build` check failed on `npm ci` with `EUSAGE:
+Missing: typescript@5.9.3 from lock file`. Root cause: TypeScript 7 is
+  incompatible with `@typescript-eslint/utils` (vendored inside
+  `eslint-config-next`), which peer-depends on `typescript@">=4.8.4
+<6.1.0"` — confirmed by reproducing locally with npm 10 (what CI's
+  Node 22 setup actually bundles; npm 11 only warns instead of failing,
+  which is why `npm ci` looked fine on a newer local npm). Not a
+  lockfile-sync mistake, a real incompatibility. Added a
+  `dependabot.yml` ignore rule for `typescript` major-version bumps so
+  this doesn't recur every week — remove it once `eslint-config-next`/
+  `typescript-eslint` support TS 7.
+- **Overnight "make it professional" pass**, done autonomously per request
+  while the user slept, entirely as PRs — nothing merged without review.
+  Six PRs:
+  - #10 EditorConfig, Prettier, `eslint-config-prettier`, Husky +
+    lint-staged pre-commit hook (verified end-to-end with a real test
+    commit, not just assumed to work), `format:check` in CI.
+  - #11 Vitest + React Testing Library, scoped per the official Next.js
+    Vitest guide for this exact version (`node_modules/next/dist/docs/`),
+    which says async Server Components aren't supported and recommends
+    E2E instead — so `/photo/[slug]` is deliberately not covered here.
+    Two real bugs found by actually running the tests: missing
+    `test.globals: true` meant RTL's auto-cleanup never registered (DOM
+    leaked across tests in one file), and querying links by accessible
+    name failed because it's the image-alt + heading text concatenated,
+    not just the title.
+  - #12 `CONTRIBUTING.md`, `SECURITY.md` (private vulnerability reporting
+    enabled on the repo directly — was off; deliberately no personal
+    email committed to a public file), `.github/dependabot.yml`,
+    `.github/PULL_REQUEST_TEMPLATE.md`.
+  - #13 `/new-prd` command — scaffolds a PRD from the template with
+    auto-incremented numbering, same workflow used for PRD-001.
+  - #14, #15, #16: PRD-002 (shopping cart), PRD-003 (checkout &
+    payment, assumes Stripe from the existing route names but flags it
+    as unconfirmed, and flags that a real Stripe account is a hard
+    blocker), PRD-004 (order confirmation & delivery, flags that no
+    full-resolution source images exist anywhere yet and no email
+    provider is chosen — both hard blockers same as PRD-003's).
+  - Also enabled GitHub's Dependabot vulnerability alerts directly
+    (repo setting, was off).
+  - Deliberately did NOT restructure `src/` — the codebase is still small
+    enough (one lib file, three pages) that reorganizing folders would be
+    premature abstraction, not "professional." Scope was tooling, repo
+    hygiene, and process instead.
 - **`/sync-board` command added** (`.claude/commands/sync-board.md`):
   discovered issue #2's board item was stuck at "In Review" even though
   PR #5 had merged — `/implement-issue` moves items to In Review when it
