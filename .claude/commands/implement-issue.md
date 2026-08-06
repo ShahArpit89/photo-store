@@ -42,6 +42,7 @@ docs/prds/README.md. Work through these steps in order and don't skip any:
 ## 5. Verify
 
 Run all of these and fix any failures before continuing:
+
 - `npm run lint`
 - `npm run typecheck`
 - `npm run build`
