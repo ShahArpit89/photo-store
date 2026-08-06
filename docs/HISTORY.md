@@ -10,6 +10,15 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Closed Dependabot PR #23 (eslint 9.39.5 → 10.8.0), added an ignore
+  rule for it.** Same pattern as PR #20 below: `npm run lint` in CI threw
+  `TypeError: Error while loading rule 'react/display-name':
+contextOrFilename.getFilename is not a function`. ESLint 10 removed the
+  deprecated `context.getFilename()` rule API; `eslint-plugin-react`
+  (vendored inside `eslint-config-next`) still calls it. Real
+  incompatibility, nothing to fix on our side. Added an ignore rule for
+  `eslint` major-version bumps — revisit once `eslint-config-next`/
+  `eslint-plugin-react` support ESLint 10.
 - **Closed Dependabot PR #20 (typescript 5.9.3 → 7.0.2), added an ignore
   rule for it.** CI's `build` check failed on `npm ci` with `EUSAGE:
 Missing: typescript@5.9.3 from lock file`. Root cause: TypeScript 7 is

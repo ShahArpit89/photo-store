@@ -11,6 +11,11 @@ updates:
       # Revisit once eslint-config-next/typescript-eslint support TS 7.
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
+      # ESLint 10 removed context.getFilename(), which eslint-plugin-react
+      # (vendored by eslint-config-next) still calls in react/display-name.
+      # Revisit once eslint-config-next/eslint-plugin-react support ESLint 10.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
