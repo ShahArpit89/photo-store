@@ -18,6 +18,4 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_PR }}
           webhook-type: incoming-webhook
           payload: |
-            {
-              "text": ":github: New PR by ${{ github.event.pull_request.user.login }}: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
-            }
+            {"text": ${{ toJson(format(':github: New PR by {0}: <{1}|{2}>', github.event.pull_request.user.login, github.event.pull_request.html_url, github.event.pull_request.title)) }}}

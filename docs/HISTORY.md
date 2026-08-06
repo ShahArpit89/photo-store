@@ -10,6 +10,19 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Fixed Slack payload JSON injection bug (silent failure, no error
+  visible in Actions).** `slack-notify`'s payload embedded
+  `github.event.head_commit.message` directly into a YAML/JSON string via
+  `${{ }}`. Merge commit messages are multi-line, so the substituted text
+  produced raw unescaped newlines inside a JSON string — invalid JSON.
+  Slack rejected it, but `slack-github-action`'s default `errors: false`
+  doesn't fail the step, so Actions showed green with nothing posted.
+  Manual curl tests worked because the test text was single-line. Fixed
+  both `ci.yml` and `slack-pr-notify.yml` by building the string with the
+  `format()` expression function and wrapping the whole thing in
+  `toJson()`, which properly escapes newlines/quotes — instead of
+  interpolating raw values straight into a JSON literal.
+
 - **Added explicit `permissions: contents: read` to `ci.yml` and
   `slack-pr-notify.yml`** (CodeQL finding on PR #26, post-merge: "Workflow
   does not contain permissions"). Neither workflow writes to the repo or
