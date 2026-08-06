@@ -50,6 +50,8 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
+              "username": "CI Bot",
+              "icon_emoji": ":gear:",
               "text": ${{ toJson(format('CI {0} on {1}', needs.build.result, github.ref_name)) }},
               "blocks": [
                 {
