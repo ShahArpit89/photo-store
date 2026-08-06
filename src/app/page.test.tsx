@@ -24,8 +24,7 @@ test("each link points at its photo's detail page and shows its title/image", ()
     expect(hrefs).toContain(`/photo/${photo.slug}`);
 
     const link = links.find(
-      (candidate) =>
-        candidate.getAttribute("href") === `/photo/${photo.slug}`,
+      (candidate) => candidate.getAttribute("href") === `/photo/${photo.slug}`,
     )!;
     expect(
       within(link).getByRole("heading", { level: 2, name: photo.title }),
