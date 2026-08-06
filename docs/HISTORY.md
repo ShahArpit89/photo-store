@@ -10,6 +10,11 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Pinned Node version locally to match CI.** CI (`ci.yml`) sets
+  `node-version: 22`, but nothing enforced that locally — `package.json`
+  had no `engines` field and there was no `.nvmrc`. Added both so local
+  dev and `nvm use` line up with CI and mismatches surface early.
+
 - **Fixed literal `\n` showing up in Slack messages; converted `ci.yml`'s
   `slack-notify` to Block Kit too.** Root cause: GitHub Actions expression
   string literals don't support backslash escapes, so a `'\n'` passed as
