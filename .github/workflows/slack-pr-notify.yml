@@ -18,4 +18,31 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_PR }}
           webhook-type: incoming-webhook
           payload: |
-            {"text": ${{ toJson(format(':github: New PR by {0}: <{1}|{2}>', github.event.pull_request.user.login, github.event.pull_request.html_url, github.event.pull_request.title)) }}}
+            {
+              "text": ${{ toJson(format('New PR by {0}: {1}', github.event.pull_request.user.login, github.event.pull_request.title)) }},
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": { "type": "plain_text", "text": "🔀 New Pull Request", "emoji": true }
+                },
+                {
+                  "type": "section",
+                  "text": { "type": "mrkdwn", "text": ${{ toJson(format('*<{0}|{1}>*', github.event.pull_request.html_url, github.event.pull_request.title)) }} }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    { "type": "mrkdwn", "text": ${{ toJson(format('👤 opened by *{0}*', github.event.pull_request.user.login)) }} }
+                  ]
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": ${{ toJson(format('📁 `{0}`   🌿 `{1}` → `{2}`', github.repository, github.event.pull_request.head.ref, github.event.pull_request.base.ref)) }}
+                    }
+                  ]
+                }
+              ]
+            }

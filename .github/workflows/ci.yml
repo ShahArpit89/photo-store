@@ -49,4 +49,30 @@ jobs:
           webhook: ${{ secrets.SLACK_WEBHOOK_ACTIONS }}
           webhook-type: incoming-webhook
           payload: |
-            {"text": ${{ toJson(format('{0} CI *{1}* on `{2}` — {3}{4}{5}/{6}/actions/runs/{7}', needs.build.result == 'success' && ':white_check_mark:' || ':x:', needs.build.result, github.ref_name, github.event.head_commit.message || github.event.pull_request.title, '\n', github.server_url, github.repository, github.run_id)) }}}
+            {
+              "text": ${{ toJson(format('CI {0} on {1}', needs.build.result, github.ref_name)) }},
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ${{ toJson(format('{0} CI {1}', needs.build.result == 'success' && '✅' || '❌', needs.build.result)) }},
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": { "type": "mrkdwn", "text": ${{ toJson(format('*Branch:* `{0}`', github.ref_name)) }} }
+                },
+                {
+                  "type": "section",
+                  "text": { "type": "mrkdwn", "text": ${{ toJson(format('*Commit:* {0}', github.event.head_commit.message || github.event.pull_request.title)) }} }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    { "type": "mrkdwn", "text": ${{ toJson(format('<{0}/{1}/actions/runs/{2}|View run ↗>', github.server_url, github.repository, github.run_id)) }} }
+                  ]
+                }
+              ]
+            }

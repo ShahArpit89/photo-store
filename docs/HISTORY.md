@@ -10,6 +10,27 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Fixed literal `\n` showing up in Slack messages; converted `ci.yml`'s
+  `slack-notify` to Block Kit too.** Root cause: GitHub Actions expression
+  string literals don't support backslash escapes, so a `'\n'` passed as
+  a `format()` argument stayed two literal characters instead of becoming
+  a real newline — then `toJson()` correctly-but-unhelpfully escaped that
+  backslash too, so Slack rendered literal `\n` text. Same latent bug was
+  in `slack-pr-notify.yml`'s combined title+author line, not just the
+  CI message. Fix: stop trying to embed line breaks inside a single
+  `format()` string — split content into separate Block Kit
+  header/section/context blocks instead, which stack vertically with no
+  manual newline needed.
+
+- **Prettified `slack-pr-notify.yml` message with Block Kit.** Plain-text
+  message used `:github:`, which isn't a standard Slack emoji and renders
+  as literal text unless the workspace adds it as a custom emoji. Switched
+  to a `blocks` payload: header, bold clickable PR title, author, and a
+  context line with repo + `head → base` branches. Kept a top-level
+  `text` fallback for notification previews/screen readers, per Slack's
+  guidance. Each dynamic field still goes through `format()` + `toJson()`
+  individually to avoid the JSON-injection bug fixed earlier.
+
 - **Fixed Slack payload JSON injection bug (silent failure, no error
   visible in Actions).** `slack-notify`'s payload embedded
   `github.event.head_commit.message` directly into a YAML/JSON string via
