@@ -53,15 +53,32 @@ gives visitors a clear sense of where they are and where they can go.
   `src/app/layout.tsx` above `{children}` so it's shared across all
   routes.
 - Links: `/` (Gallery), `/categories`, `/about`.
+- Gallery stays at `/` for v1 — no `/gallery` route split. Revisit only if
+  a dedicated landing page (hero, marketing content) gets prioritized
+  later; adding the split now would be a speculative redirect with no
+  current payoff.
 - `/about` is a new static page (`src/app/about/page.tsx`) with
   placeholder copy for v1 — real content is a separate writing task, not
-  a blocker for shipping the nav.
-- `/categories` is a new page (`src/app/categories/page.tsx`). Since no
-  category data model exists yet, this page ships as a clearly labeled
-  "coming soon" placeholder rather than faking a browsing experience — see
-  Open Questions for the alternative of building the real thing now.
+  a blocker for shipping the nav. The template itself defines three
+  content blocks so whoever writes real copy later knows the shape:
+  bio, mission statement, and contact/social links. Placeholder text
+  fills all three.
+- `/categories` is a new page (`src/app/categories/page.tsx`), shipped as
+  a clearly labeled "coming soon" placeholder — no category data model
+  exists yet, and designing one is out of scope for a nav PRD (follow-up
+  PRD to own real category browsing). `/categories` is treated as the
+  permanent URL for this feature, not a placeholder path to be renamed
+  later — the follow-up PRD builds the real page at this same route
+  rather than introducing a redirect.
 - Sticky header, plain text wordmark, hamburger toggle below the `sm`
   breakpoint for the mobile menu.
+- Mobile menu toggle icon: Heroicons (`Bars3Icon` / `XMarkIcon`) — same
+  authors as Tailwind, ships plain SVG components, no extra runtime
+  dependency beyond the package itself.
+- Accent color: Tailwind `indigo-600` (`indigo-400` in dark mode) for
+  active-link state and any link/button accents. The site has no brand
+  color defined yet (`globals.css` is pure grayscale); this is a
+  placeholder default, not a branding decision.
 
 ## Success Metrics
 
@@ -75,20 +92,5 @@ gives visitors a clear sense of where they are and where they can go.
 
 ## Open Questions
 
-- **Categories data model isn't designed yet.** Does this PRD block on
-  designing it, or ship the nav link pointing at a "coming soon"
-  placeholder and let a follow-up PRD own real category browsing?
-  Recommend the placeholder, so the nav isn't blocked on an unrelated
-  data-model decision.
-- **About Us copy/content** — who writes it, and what goes on the page
-  (bio, mission statement, contact info)? Recommend placeholder copy for
-  v1, with real copy treated as a separate content task.
-- Should "Gallery" in the nav just relabel the existing `/` homepage, or
-  does it imply moving the grid to its own `/gallery` route and making
-  `/` a distinct landing page? Recommend keeping the grid at `/` for v1 to
-  avoid an unnecessary redirect, revisiting only if a landing page is
-  wanted later.
-- Any specific visual direction beyond "modern" (logo/wordmark treatment,
-  icon set for the mobile menu toggle, color accents)? Recommend a plain
-  text wordmark and sticky header as a cheap v1 default, with anything
-  more custom treated as a separate design task.
+None — all four questions raised during review are resolved; decisions
+recorded in Solution above.

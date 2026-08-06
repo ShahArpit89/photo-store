@@ -10,6 +10,19 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Resolved PRD-005's four open questions.** Categories nav link ships
+  as a permanent `/categories` "coming soon" placeholder (not a
+  throwaway path — the follow-up categories PRD builds the real page at
+  this same route, no redirect). About page template gets three fixed
+  content blocks (bio, mission statement, contact/social) with
+  placeholder copy in each, so future real-copy writing has a shape to
+  fill rather than needing another design pass. Gallery stays at `/`
+  for v1, revisit explicitly if a landing page is ever prioritized.
+  Visual defaults pinned: Heroicons for the mobile menu toggle (same
+  authors as Tailwind, no extra runtime dependency), Tailwind
+  `indigo-600`/`indigo-400` as the one accent color since the site has
+  no brand color defined yet.
+
 - **Pinned Node version locally to match CI.** CI (`ci.yml`) sets
   `node-version: 22`, but nothing enforced that locally — `package.json`
   had no `engines` field and there was no `.nvmrc`. Added both so local
