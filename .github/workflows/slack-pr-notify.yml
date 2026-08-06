@@ -19,6 +19,8 @@ jobs:
           webhook-type: incoming-webhook
           payload: |
             {
+              "username": "PR Bot",
+              "icon_emoji": ":twisted_rightwards_arrows:",
               "text": ${{ toJson(format('New PR by {0}: {1}', github.event.pull_request.user.login, github.event.pull_request.title)) }},
               "blocks": [
                 {
