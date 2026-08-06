@@ -2,6 +2,7 @@
 
 A photography-selling website — browse a gallery, view photo detail pages,
 add to cart, and check out.
+<!-- test/slack-pr-notify-check: verifying Slack PR channel notification, will close without merging -->
 
 [![CI](https://github.com/ShahArpit89/photo-store/actions/workflows/ci.yml/badge.svg)](https://github.com/ShahArpit89/photo-store/actions/workflows/ci.yml)
 
