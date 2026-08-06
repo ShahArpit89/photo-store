@@ -27,10 +27,13 @@ jobs:
                 },
                 {
                   "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ${{ toJson(format('*<{0}|{1}>*\n👤 opened by *{2}*', github.event.pull_request.html_url, github.event.pull_request.title, github.event.pull_request.user.login)) }}
-                  }
+                  "text": { "type": "mrkdwn", "text": ${{ toJson(format('*<{0}|{1}>*', github.event.pull_request.html_url, github.event.pull_request.title)) }} }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    { "type": "mrkdwn", "text": ${{ toJson(format('👤 opened by *{0}*', github.event.pull_request.user.login)) }} }
+                  ]
                 },
                 {
                   "type": "context",
