@@ -10,6 +10,20 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Slack notifications: two channels, two webhooks.** Added a
+  `slack-notify` job to `ci.yml` (posts every run's result — success and
+  failure — to `SLACK_WEBHOOK_ACTIONS`) and a new `slack-pr-notify.yml`
+  workflow (posts on `pull_request: opened` to `SLACK_WEBHOOK_PR`).
+  Deliberately two separate Incoming Webhooks/channels rather than one,
+  per request — Actions noise and PR-raised signal serve different
+  audiences. Used Slack Incoming Webhooks + `slackapi/slack-github-action`
+  instead of the official Slack GitHub app so both are configurable from
+  repo secrets without needing Slack workspace admin to wire up
+  `/github subscribe`. Both steps have `continue-on-error: true` so a
+  missing/misconfigured secret can't block required CI or PR checks —
+  secrets (`SLACK_WEBHOOK_ACTIONS`, `SLACK_WEBHOOK_PR`) must be added by a
+  repo admin via `gh secret set`; not set as of this commit.
+
 - **CI workflow: concurrency cancellation + job timeout** (PR #24). Run
   history showed CI runs stacking ~1-2 min apart during Dependabot bursts
   and rapid pushes, with superseded runs completing anyway instead of

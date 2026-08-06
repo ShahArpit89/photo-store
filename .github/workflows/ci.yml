@@ -33,3 +33,19 @@ jobs:
       - run: npm run test:ci
 
       - run: npm run build
+
+  slack-notify:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: slackapi/slack-github-action@v2.1.1
+        continue-on-error: true
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_ACTIONS }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "${{ needs.build.result == 'success' && ':white_check_mark:' || ':x:' }} CI *${{ needs.build.result }}* on `${{ github.ref_name }}` — ${{ github.event.head_commit.message || github.event.pull_request.title }}\n${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }

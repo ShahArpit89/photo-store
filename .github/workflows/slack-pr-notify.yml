@@ -1,0 +1,20 @@
+name: Slack PR Notify
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: slackapi/slack-github-action@v2.1.1
+        continue-on-error: true
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_PR }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": ":github: New PR by ${{ github.event.pull_request.user.login }}: <${{ github.event.pull_request.html_url }}|${{ github.event.pull_request.title }}>"
+            }
