@@ -1,9 +1,27 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatPrice, getPhotoBySlug, photos } from "@/lib/photos";
 
 export function generateStaticParams() {
   return photos.map((photo) => ({ slug: photo.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/photo/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const photo = getPhotoBySlug(slug);
+
+  if (!photo) {
+    return {};
+  }
+
+  return {
+    title: `${photo.title} · Photo Store`,
+    description: photo.description,
+  };
 }
 
 export default async function PhotoPage({
@@ -19,7 +37,13 @@ export default async function PhotoPage({
   return (
     <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-black">
       <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-16 sm:px-8">
-        <div className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/10">
+        <Link
+          href="/"
+          className="text-sm font-medium text-zinc-600 hover:text-black dark:text-zinc-400 dark:hover:text-zinc-50"
+        >
+          ← Back to gallery
+        </Link>
+        <div className="mt-6 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/10">
           <div className="relative aspect-[3/2]">
             <Image
               src={photo.imageUrl}
