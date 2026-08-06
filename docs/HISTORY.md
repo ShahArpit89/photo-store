@@ -10,6 +10,12 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Added explicit `permissions: contents: read` to `ci.yml` and
+  `slack-pr-notify.yml`** (CodeQL finding on PR #26, post-merge: "Workflow
+  does not contain permissions"). Neither workflow writes to the repo or
+  calls the GitHub API beyond checkout — `contents: read` is the minimal
+  grant; without it `GITHUB_TOKEN` defaults to broad read/write.
+
 - **Slack notifications: two channels, two webhooks.** Added a
   `slack-notify` job to `ci.yml` (posts every run's result — success and
   failure — to `SLACK_WEBHOOK_ACTIONS`) and a new `slack-pr-notify.yml`
