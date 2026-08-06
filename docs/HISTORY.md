@@ -10,6 +10,15 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Broke PRD-005 into three tracking issues, moved Status to
+  Approved.** Split by route rather than one combined issue: #35 (`/about`
+  page), #36 (`/categories` placeholder), #37 (NavBar component). #37
+  explicitly depends on #35 and #36 merging first — the nav ships links
+  to both routes, so merging it before they exist would 404. Split
+  mirrors PRD-001's data-model/grid/detail pattern rather than one PR
+  covering all three; each piece is independently mergeable and
+  reviewable.
+
 - **Resolved PRD-005's four open questions.** Categories nav link ships
   as a permanent `/categories` "coming soon" placeholder (not a
   throwaway path — the follow-up categories PRD builds the real page at

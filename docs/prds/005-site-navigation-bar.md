@@ -1,8 +1,8 @@
 # PRD-005: Site navigation bar
 
-- **Status:** Draft
+- **Status:** Approved
 - **Author:** arpitshah
-- **Issue:** TBD
+- **Issue:** #35, #36, #37
 
 ## Problem
 
