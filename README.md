@@ -23,3 +23,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it.
 ## Editor
 
 Recommended VS Code extensions are listed in `.vscode/extensions.json` and will be suggested automatically when you open this folder.
+
+## Contributing
+
+Features start as a PRD in `docs/prds/` before implementation — see `docs/prds/README.md` for the workflow and branch naming convention.
