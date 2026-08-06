@@ -10,6 +10,15 @@ otherwise have to re-derive.
 
 ## 2026-08-06
 
+- **Prettified `slack-pr-notify.yml` message with Block Kit.** Plain-text
+  message used `:github:`, which isn't a standard Slack emoji and renders
+  as literal text unless the workspace adds it as a custom emoji. Switched
+  to a `blocks` payload: header, bold clickable PR title, author, and a
+  context line with repo + `head → base` branches. Kept a top-level
+  `text` fallback for notification previews/screen readers, per Slack's
+  guidance. Each dynamic field still goes through `format()` + `toJson()`
+  individually to avoid the JSON-injection bug fixed earlier.
+
 - **Fixed Slack payload JSON injection bug (silent failure, no error
   visible in Actions).** `slack-notify`'s payload embedded
   `github.event.head_commit.message` directly into a YAML/JSON string via
